@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<title>TCO Locoduinodrome</title>
+<link rel="icon" href="../img/icon.jpg" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<svg width="1500" height="1000" xmlns="http://www.w3.org/2000/svg">
+
+<style type="text/css">
+	/* <![CDATA[ */
+		line, path {
+		  //stroke-dasharray: 1, 2;
+		  stroke-width: 10px;
+		  fill:none;
+		}
+
+		h1 { text-align: center; }
+
+		.free { stroke: grey; }
+		.busy { stroke: red; }
+		.dasharray { stroke-dasharray: 1, 2; }
+		.aiguille {
+		    fill:transparent;
+			cursor: pointer;
+		}
+		.feuV { fill: #00ff00; }
+		.feuR { fill: #ff0000; }
+		.feuJ { fill: #f3c053; }
+		.feuB { fill: #ffffff; }
+		.capteur { fill: #e227d9; }
+		
+		
+		/* ]]> */
+</style>
+
+<script type="text/JavaScript">
+            <![CDATA[
+			
+				var sat = {}; // Objet qui va contenir les informations des satellites
+			
+				var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
+				connection.onopen = function () {
+					connection.send('Connect ' + new Date());
+				};
+				connection.onerror = function (error) {
+					console.log('WebSocket Error ', error);
+				};
+				connection.onmessage = function (e) {  
+					if(e.data.length > 0)
+					  parseMsg(e.data);
+				};
+				connection.onclose = function(){
+					console.log('WebSocket connection closed');
+				};
+				
+				
+				
+				var initGraph = function() {
+					
+					for(var i = 0; i < sat.length; i++) {
+						console.log("# Satellite : "+sat[i].id);
+						console.log("  * Detecteur 1 : "+sat[i].detecteur[0].id);
+						console.log("  * Detecteur 2 : "+sat[i].detecteur[1].id);
+						console.log("  * Detecteur 3 : "+sat[i].detecteur[2].id);
+						
+						$("#"+sat[i].detecteur[0].id).hide();
+						$("#"+sat[i].detecteur[1].id).hide();
+						var el = document.getElementsByName(sat[i].detecteur[2].id);
+						for (var j = 0; j < el.length; j++) {
+							el[j].classList.remove("busy");
+							el[j].classList.add("free");
+						}
+					}
+				}
+
+
+
+				var sendReq = function (callback, url, param) {
+					$.ajax({
+					  type: "POST",
+					  url: url,
+					  data: param,
+					  dataType: "text",
+					  success: function (data) {
+							callback(data);
+						}
+					});
+				}
+				
+				
+				
+			
+				document.addEventListener('DOMContentLoaded', setup, false); // Ecouteur sur chargement de la page -> appele la fonction "setup" ci dessous
+
+				function setup () { // Initialise au chargement de la page les elements du DOM, cases a cocher, champs de saisie etc...
+					
+					/* Chargement du fichier json de configuration */
+					var url = "/data.json";
+					sendReq(setSat, url);
+					
+					/* Ecouteurs sur aiguilles */
+					$("#A0").click(function(){
+						turnout(2);
+					});
+					
+					$("#A1").click(function(){
+            			turnout(5);
+					});
+				} // End setup
+				
+				
+				/* chargement du fichier json de configuration */	
+				function setSat(data) {	
+					sat = jQuery.parseJSON(data); // Initialisation de l'objet "satellites" contenant les informations sur les satellites.
+					console.log(sat);
+					initGraph();                  // Initialisation des elements graphiques du reseau
+				}
+					
+					
+			   function turnout (a) {
+				   
+				   switch (a) {
+					   case 2:
+						 var ZA = "Z2";
+						 var ZB = "Z22";
+						 var id = "0x22 0 3 "
+					   	 break;
+					   case 5:
+						 var ZA = "Z5";
+						 var ZB = "Z52";
+						 var id = "0x26 0 3 "
+						 break;
+				   }
+				   
+			   	   $("#"+ZA).toggleClass( "dasharray" );
+				   $("#"+ZB).toggleClass( "dasharray" );
+				   
+				  
+				   if(sat[a].servo["estDroit"]) {
+					   var msg = id + "00000000 00000000 10000000";
+					   sat[a].servo["estDroit"] = false;
+				   }
+				   else {
+					   var msg = "";
+					   var msg = id + "00000000 00000000 00000000";
+					   sat[a].servo["estDroit"] = true;
+				   }
+				   connection.send(msg);
+				  
+			   }
+			   
+			   
+			   var parseMsg = function(msg) {
+
+			   		var data = "";
+			   		let str_id = msg[1].toString(10);
+
+					switch(msg[0]) {
+
+						case "1" : // Capteurs ponctuels et de consommation
+							// Conversion en binaire des datas recues
+						    let val = Number(msg[7]);
+						    let status = val.toString(2);
+						    switch(status.length) {
+							   case 1 :
+							   status = "00"+status;
+							   break;
+							   case 2 :
+							   status = "0"+status;
+							   break;
+						    }
+														
+							if(status[2] == 1) { // Capteur 1 active
+								$("#"+sat[str_id].detecteur[0].id).show();
+								sat[str_id].detecteur[0].status = 1;
+							}
+							else if(status[2] == 0) { // Capteur 1 desactive
+								$("#"+sat[str_id].detecteur[0].id).hide();
+								sat[str_id].detecteur[0].status = 0;
+							}
+							
+							if(status[1] == 1) { // Capteur 2 active
+								$("#"+sat[str_id].detecteur[1].id).show();
+								sat[str_id].detecteur[1].status = 1;
+							}
+							else if(status[1] == 0) { // Capteur 2 desactive
+								$("#"+sat[str_id].detecteur[1].id).hide();
+								sat[str_id].detecteur[1].status = 0;
+							}
+							
+							// Liste des elements graphiques du TCO qui correspondent
+							let el = document.getElementsByName(sat[str_id].detecteur[2].id);
+							
+							if(status[0] == 1) { // Detecteur de consommation active (bit 0 == 1)
+								if(sat[str_id].detecteur[2].status == 0) {
+									sat[str_id].detecteur[2].status = 1; // Met a jour l'info dans l'objet
+									for (let j = 0; j < el.length; j++) { // Mise a jour du trace
+										el[j].classList.remove("free");
+										el[j].classList.add("busy");
+									}
+								}								
+							}
+							
+							else if(status[0] == 0) { // Detecteur de consommation desactive (bit 0 == 0)
+								if(sat[str_id].detecteur[2].status == 1) {
+									sat[str_id].detecteur[2].status = 0; // Met a jour l'info dans l'objet
+									for (let j = 0; j < el.length; j++) { // Mise a jour du trace
+										el[j].classList.remove("busy");
+										el[j].classList.add("free");
+									}
+								}
+							}
+							break;
+						case "2" :  // Identifiants 0x2
+							data = msg.substring(7);
+							let pos1 = data.indexOf(" ");
+							let pos2 = data.indexOf(" ", pos1+1);
+							let oct1 = Number(data.substring(0, pos1));
+							let oct2 = Number(data.substring(pos1+1, pos2));
+							let oct3 = Number(data.substring(pos2+1));
+							break;
+						case "3" :  // Identifiants 0x3
+							console.log("case 3");	
+							break;								
+					} // switch
+				} // parseMsg
+				
+				
+			   
+               
+            ]]>
+        </script>
+		
+		
+		<image  id="logo" xlink:href="http://alkans.fr/locoduino/locoduinodrome/img/locduino_logo_2.png" x="20" y="20" height="98" width="266"/>
+		
+		<!--Trace-->
+		<line id="-" name="-" class="" x1="550" y1="600" x2="550" y2="600" />
+		<!--Z0--><line id="Z0" name="Z0" class="busy" x1="550" y1="600" x2="850" y2="600" />
+		<!--Z1--><line id="Z1" name="Z1" class="busy" x1="550" y1="550" x2="850" y2="550" />
+		<!--Z2--><path id="Z2" name="Z2" class="busy dasharray" d="M 400,600 c 75,0 75,-50 150,-50" />
+				 <line id="Z22" name="Z2" class="busy" x1="400" y1="600" x2="550" y2="600" />
+		<!--Z3--><path id="Z3" name="Z3" class="busy" d ="M 400,100 A 250 250 0 0 0 400,600" />
+		<!--Z4--><path id="Z4" name="Z4" class="busy" d ="M 1000,100 A 250 250 0 0 1 1000,600" />
+		<!--Z5--><path id="Z5" name="Z5" class="busy dasharray" d="M 850,550 c 75,0 75,50 150,50" />
+				 <line id="Z52" name="Z5" class="busy" x1="850" y1="600" x2="1000" y2="600" />
+		<!--Z6--><line id="Z6" name="Z6" class="busy" x1="400" y1="100" x2="1000" y2="100"/>
+		
+		<!--Aiguillage A0 (gauche)-->
+		<rect id="A0" class="aiguille droit" x="400" y="525" width="150" height="100" />
+		<!--Aiguillage A1 (droite)-->
+		<rect id="A1" class="aiguille droit" x="850" y="525" width="150" height="100" />
+			
+		<!--Capteurs-->
+		<circle id="P1" class="capteur" cx="300" cy="578" r="10" />
+		<circle id="P2" class="capteur" cx="1100" cy="580" r="10" />
+		<circle id="P3" class="capteur" cx="850" cy="550" r="10" />
+		<circle id="P4" class="capteur" cx="550" cy="600" r="10" />
+		<circle id="P5" class="capteur" cx="850" cy="600" r="10" />
+		<circle id="P6" class="capteur" cx="550" cy="550" r="10" />
+		<circle id="P7" class="capteur" cx="1100" cy="120" r="10" />
+		<circle id="P8" class="capteur" cx="300" cy="120" r="10" />
+		<circle id="P9" class="capteur" cx="550" cy="100" r="10" />
+		<circle id="P10" class="capteur" cx="850" cy="100" r="10" />
+		
+		
+		<!--Signalisation-->
+		<image id="S1" xlink:href="http://alkans.fr/locoduino/tco/img/semaphoreS1.png" x="900" y="42" height="41px" width="100px"></image>
+		<circle id="S1V" class="feuV" cx="970" cy="52" r="4"></circle>
+		<circle id="S1R1" class="feuR" cx="980" cy="52" r="4"></circle>
+		<circle id="S1R2" class="feuR" cx="961" cy="52" r="4"></circle>
+		<circle id="S1J1" class="feuJ" cx="952" cy="52" r="4"></circle>
+		<circle id="S1J2" class="feuJ" cx="990" cy="52" r="4"></circle>
+		<circle id="S1J3" class="feuJ" cx="990" cy="72" r="4"></circle>
+
+		
+		<image id="S2" xlink:href="http://alkans.fr/locoduino/tco/img/semaphoreS2.png" x="400" y="120" height="41px" width="100px"></image>
+		<circle id="S2V" class="feuV" cx="428" cy="151" r="4"></circle>
+		<circle id="S2R1" class="feuR" cx="437" cy="151" r="4"></circle>
+		<circle id="S2R2" class="feuR" cx="419" cy="151" r="4"></circle>
+		<circle id="S2J1" class="feuJ" cx="446" cy="151" r="4"></circle>
+		<circle id="S2J2" class="feuJ" cx="410" cy="151" r="4"></circle>
+		<circle id="S2J3" class="feuJ" cx="410" cy="131" r="4"></circle>
+
+		
+		<image id="S3" xlink:href="http://alkans.fr/locoduino/tco/img/semaphoreS3.png" x="400" y="60" height="21px" width="55px"></image>
+		<circle id="S3V" class="feuV" cx="445" cy="71" r="4"></circle>
+		<circle id="S3R" class="feuR" cx="436" cy="71" r="4"></circle>
+		<circle id="S3J" class="feuJ" cx="427" cy="71" r="4"> 
+		<animate id="S3Ja1" attributeName="opacity" from="0" to="1" dur="0.7s" begin="0s;S3Ja2.end"></animate>
+    	<animate id="S3Ja2" attributeName="opacity" from="1" to="0" dur="0.7s" begin="S3Ja1.end"></animate>
+		</circle>
+
+		
+		<image id="S4" xlink:href="http://alkans.fr/locoduino/tco/img/semaphoreS4.png" x="950" y="130" height="21px" width="55px"></image>
+		<circle id="S4V" class="feuV" cx="960" cy="141" r="4"></circle>
+		<circle id="S4R" class="feuR" cx="969" cy="141" r="4"></circle>
+		<circle id="S4J" class="feuJ" cx="978" cy="141" r="4">
+		<animate id="S4Ja1" attributeName="opacity" from="0" to="1" dur="0.7s" begin="0s;S4Ja2.end"></animate>
+    	<animate id="S4Ja2" attributeName="opacity" from="1" to="0" dur="0.7s" begin="S4Ja1.end"></animate>
+		</circle>
+
+	
+		<image id="C1" xlink:href="http://alkans.fr/locoduino/tco/img/carreC1.png" x="320" y="544" height="48px" width="100px"/>
+		<circle id="C1V" class="feuV" cx="387" cy="566" r="4" />
+		<circle id="C1R1" class="feuR" cx="405" cy="566" r="4"/>
+		<circle id="C1R2" class="feuR" cx="378" cy="566" r="4"/>
+		<circle id="C1J" class="feuJ" cx="369" cy="566" r="4" />
+		<circle id="C1B" class="feuB" cx="364" cy="549" r="3" />
+
+		
+		<image id="C2" xlink:href="http://alkans.fr/locoduino/tco/img/carreC2.png" x="1000" y="614" height="48px" width="100px"/>
+		<circle id="C2V" class="feuV" cx="1035" cy="640" r="4" />
+		<circle id="C2R1" class="feuR" cx="1043" cy="640" r="4" />
+		<circle id="C2R2" class="feuR" cx="1016" cy="640" r="4" />
+		<circle id="C2J" class="feuJ" cx="1051" cy="640" r="4" />
+		<circle id="C2B" class="feuB" cx="1056" cy="657" r="3" />
+
+		
+		<image id="C3" xlink:href="http://alkans.fr/locoduino/tco/img/carreC3.png" x="745" y="554" height="40" width="110"/>
+		<circle id="C3V" class="feuV" cx="829" cy="583" r="4" />
+		<circle id="C3R1" class="feuR" cx="820" cy="583" r="4" />
+		<circle id="C3R2" class="feuR" cx="845" cy="583" r="4" />
+		<circle id="C3J" class="feuJ" cx="811" cy="583" r="4" />
+		<circle id="C3B" class="feuB" cx="802" cy="561" r="3"></circle>
+		
+		
+		<image id="C4" xlink:href="http://alkans.fr/locoduino/tco/img/carreC4.png" x="550" y="614" height="40" width="110"/>
+		<circle id="C4V" class="feuV" cx="578" cy="626" r="4" />
+		<circle id="C4R1" class="feuR" cx="560" cy="626" r="4" />
+		<circle id="C4R2" class="feuR" cx="587" cy="626" r="4" />
+		<circle id="C4J" class="feuJ" cx="596" cy="626" r="4" />
+		<circle id="C4B" class="feuB" cx="603" cy="647" r="3" />
+		
+		
+		<image id="C5" xlink:href="http://alkans.fr/locoduino/tco/img/carreC5.png" x="745" y="500" height="40" width="110"/>
+		<circle id="C5V" class="feuV" cx="829" cy="529" r="4" />
+		<circle id="C5R1" class="feuR" cx="820" cy="529" r="4" />
+		<circle id="C5R2" class="feuR" cx="845" cy="529" r="4" />
+		<circle id="C5J" class="feuJ" cx="811" cy="529" r="4" />
+		<circle id="C5B" class="feuB" cx="802" cy="507" r="3" />
+		
+		
+		<image id="C6" xlink:href="http://alkans.fr/locoduino/tco/img/carreC6.png" x="550" y="555" height="40" width="110"/>
+		<circle id="C6V" class="feuV" cx="578" cy="566" r="4" />
+		<circle id="C6R1" class="feuR" cx="560" cy="566" r="4" />
+		<circle id="C6R2" class="feuR" cx="587" cy="566" r="4" />
+		<circle id="C6J" class="feuJ" cx="596" cy="566" r="4" />
+		<circle id="C6B" class="feuB" cx="603" cy="588" r="3"></circle>
+		
+        </svg>
+        
+        
+        
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!--
+
+Interface HTML pour le reglages des satellites dans le cadre du projet Locoduinodrome.
+
+Cette interface graphique a pour but de permettre le reglages des principaux parametres
+d'un sattellite :
+
+- Pour le servo permettant le controle d'un aiguillage, il est possible de parametrer la vitesse, l'angle pour la position deviee et l'angle pour la position droite.
+
+-->
+
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/js/script.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="/img/icon.jpg" />
+<title>Satellites</title>
+</head>
+
+
+
+<body>
+<img src="/img/locduino_logo_2.png" name="logo_locoduino" width="266" height="98" id="logo_locoduino">
+<div class="container">
+  <table>
+    <tr>
+      <td><h3>Parametrage de satellite</h3></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>N° satellite : 
+        <select id="menuSat" name="menuSat"  onchange="checkSat($(this).val());">
+          <option value="">-- N° satellite --</option>
+        </select>
+        </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td id="servo"><a href="#">Servo</a></td>
+      <td id="led"><a href="#">Leds</a></td>
+    </tr>
+  </table>
+  
+  
+  
+  <!--servo-->
+  <table id="tab2">
+      <td class="title_01">Servo aiguillage</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="tr_01">
+
+      
+       <td>Vitesse</td>
+      <td><input id="aigSpeedSlider" type="range" name="aigSpeed" min="" max="" step="1" value="" onInput="setServo(this.name, this.id, this.value, '010', 0)"/></td>
+      <td><input id="aigSpeedInput"type="number" name="aigSpeed" min="" max="" step="1" value="" onInput="setServo(this.name, this.id, this.value, '010', 0)"/></td>
+      </td><td>
+      
+      </td>
+    </tr>
+    <tr class="tr_01">
+      <td>Position mini</td>
+      <td><input id="aigPosMinSlider" type="range" name="aigPosMin" min="" max="" step="1" value="" onInput="setServo(this.name, this.id, this.value, '000', 0)"/></td>
+      <td><input type="number" min="" max="" name="aigPosMin" id="aigPosMinInput" value="" onChange="setServo(this.name, this.id, this.value, '000', 0)"/></td>
+    
+    
+    <td><button type="button" class="btn btn-info" onClick="testServo(0)" >tester</button></td>
+    
+    </tr>
+    <tr class="tr_01">
+      <td>Position maxi</td>
+      <td><input id="aigPosMaxSlider" type="range" name="aigPosMax" min="" max="" step="1" value="" onInput="setServo(this.name, this.id, this.value, '001', 0)"/></td>
+      <td><input type="number" min="" max="" name="aigPosMax" id="aigPosMaxInput" value="" onChange="setServo(this.name, this.id, this.value, '001', 0)"/></td>
+      
+      <td><button type="button" class="btn btn-info" onClick="testServo(1)" >tester</button></td>
+    </tr>
+    <tr class="tr_01">
+      <td>&nbsp;</td>
+      <td><button type="button" class="btn btn-info" onClick="validServo(0)" >tester</button>
+        <button type="button" class="btn btn-success" onClick="validServo(1)">valider</button></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  
+  <!--Leds-->
+  <table id="tab3">
+    <tr>
+      <td>N° de led : 
+        <select id="menuLed" name="menuLed" onChange="menuLedInit();">
+          <option value="">-- N° de led --</option>
+        </select>
+        </td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    
+    <tr class="tr_01">
+      <td>Intensité</td>
+      <td><input id="ledBrightSlider" name="ledBright" type="range" min="0" max="255" step="1" onInput="setLed(this.name, this.id, this.value, '000');"/></td>
+      <td>
+      <input type="number" min="" max="" name="ledBright" id="ledBrightInput" value="" onInput="setLed(this.name, this.id, this.value, '000');"/>
+      </td>
+      
+    </tr>
+    <tr>
+    <tr class="tr_01">
+      <td>Temps d'allumage</td>
+      <td><input id="ledBrightTimeSlider" name="ledBrightTime" type="range" min="0" max="255" step="1" value="" onInput="setLed(this.name, this.id, this.value, '001');"/></td>
+      <td>
+      <input type="number" min="" max="" name="ledBrightTime" id="ledBrightTimeInput" value="" onInput="setLed(this.name, this.id, this.value, '001');"/></td>
+    </tr>
+    <tr class="tr_01">
+      <td>Temps d'extinction</td>
+      <td><input id="ledFadingTimeSlider" name="ledFadingTime" type="range" min="0" max="255" step="1" value="" onInput="setLed(this.name, this.id, this.value, '010');"/></td>
+      <td>
+       <input type="number" min="" max="" name="ledFadingTime" id="ledFadingTimeInput" value="" onInput="setLed(this.name, this.id, this.value, '010');"/></td>
+    </tr>
+    <tr>
+    <tr class="tr_01">
+      <td>Temps allume</td>
+      <td><input id="ledOnTimeSlider" name="ledOnTime" type="range" min="0" max="255" step="1" value="" onInput="setLed(this.name, this.id, this.value, '011');"/></td>
+      <td>
+      <input type="number" min="" max="" name="ledOnTime" id="ledOnTimeInput" value="" onInput="setLed(this.name, this.id, this.value, '011');"/></td>
+    </tr>
+    <tr class="tr_01">
+      <td>Periode</td>
+      <td><input id="ledPeriodSlider" name="ledPeriod" type="range" min="0" max="1500" step="10" value="" onInput="setLed(this.name, this.id, this.value, '100');"/></td>
+      <td>
+      <input type="number" min="" max="" name="ledPeriod" id="ledPeriodInput" value="" onInput="setLed(this.name, this.id, this.value, '011');"/></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

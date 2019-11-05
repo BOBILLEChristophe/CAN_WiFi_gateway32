@@ -1,0 +1,279 @@
+[
+	{
+		"id": 0,
+		"signal":
+		[
+			{"sens": "ho",
+				"s-1": "C2",
+				"s-1_sem_red": "0x25 0 3 00001000 00100000 00000000",
+				"s-2": "S4",
+				"s-2_sem_ora": "0x24 0 3 00000010 00000000 00000000",
+				"s-2_sem_gre": "0x24 0 3 00100000 00000000 00000000",
+				"z-2": "Z4"
+			},
+			{"sens": "ah", "s-1": "C1", "s-2": "S3"}
+			
+		],
+		"servo": [{"pin": "A2", "min": 1200,"id": "", "max": 1700, "speed": 2.0, "initPos": 0.5, "estDroit": true}],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "P3", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "P5", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "Z0", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "C3V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "C3R1", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "C3R2", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "C3J", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "C3B", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+	},
+	{
+		"id": 1,
+		"signal":
+		[
+			{"sens": "ho",
+				"s-1": "",
+				"s-1_sem_red": "",
+				"s-2": "S4",
+				"s-2_sem_ora": "",
+				"s-2_sem_gre": "",
+				"z-2": ""
+			},
+			{"sens": "ah", "s-1": "C1", "s-2": "S2"}
+			
+		],
+		"servo": [{"pin": "A2", "min": 1200,"id": "", "max": 1700, "speed": 2.0, "initPos": 0.5, "estDroit": true}],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "P4", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "P6", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "Z1", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "C4V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "C4R1", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "C4R2", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "C4J", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "C4B", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+	},
+	{
+		"id": 2,
+		"signal":
+		[
+			{"sens": "ho",
+				"s-1": "C4",
+				"s-1_sem_red": "0x21 0 3 00001000 00000010 00000000",
+				"s-2": "C2",
+				"s-2_sem_ora": "0x25 0 3 00000010 00000000 00000000",
+				"s-2_sem_gre": "0x25 0 3 00100000 00000000 00000000",
+				"z-2": "Z5"
+			},
+			{"sens": "ah", "s-1": "C1", "s-2": "S2"}
+			
+		],
+		"servo": 
+			[
+				{"pin": "A2", "min": 1200,"id": "a0", "max": 1700, "speed": 2.0, "initPos": 0.5,
+					"estDroit": true,
+					"msgDroit": "0x21 0 3 00001000 00000010 00000000",
+					"msgTurn" : "0x21 0 3 00001000 00000010 00000000"
+				}
+			],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "-", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "-", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "Z2", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "S3V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "S3R", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "S3J", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+	},
+	{
+		"id": 3,
+		"signal":
+		[
+			{"sens": "ho",
+				"s-1": "C4",
+				"s-1_sem_red": "0x21 0 3 00001000 00000010 00000000",
+				"s-2": "C2",
+				"s-2_sem_ora": "0x25 0 3 00000010 00000000 00000000",
+				"s-2_sem_gre": "0x25 0 3 00100000 00000000 00000000",
+				"z-2": "Z0"
+			},
+			{"sens": "ah", "s-1": "S3", "s-2": "S1"}
+			
+		],
+		"servo": [{"pin": "A2", "min": 1200,"id": "", "max": 1700, "speed": 2.0, "initPos": 0.5, "estDroit": true}],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "P8", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "P9", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "Z3", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "S4V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "S4R", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "S4J", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+	},
+	{
+		"id": 4,
+		"signal":
+		[
+			{"sens": "ho",
+				"s-1": "S2",
+				"s-1_sem_red": "0x23 0 3 00000000 00000010 00000000",
+				"s-2": "C4",
+				"s-2_sem_ora": "0x21 0 3 00000010 00000000 00000000",
+				"s-2_sem_gre": "0x21 0 3 00100000 00000000 00000000",
+				"z-2": "Z2"
+			},
+			{"sens": "ah", "s-1": "S1", "s-2": "C5"}
+			
+		],
+		"servo": [{"pin": "A2", "min": 1200,"id": "", "max": 1700, "speed": 2.0, "initPos": 0.5, "estDroit": true}],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "P7", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "P10", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "Z6", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "S1V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "S1R1", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "S1R2", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "S1J1", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "S1J2", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "S1J3", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "S4V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "S4R", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "S4J", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+
+	},
+	{
+		"id": 5,
+		"signal":
+		[
+			{"sens": "ho",
+				"s-1": "S4",
+				"s-1_sem_red": "0x24 0 3 00001000 00000000 00000000",
+				"s-2": "S2",
+				"s-2_sem_ora": "0x23 0 3 10000000 00000000 00000000",
+				"s-2_sem_gre": "0x23 0 3 00000000 00001000 00000000",
+				"z-2": "Z6"
+			},
+			{"sens": "ah", "s-1": "C5", "s-2": "C1"}
+			
+		],
+		"servo": [{"pin": "A2", "min": 1200,"id": "", "max": 1700, "speed": 2.0, "initPos": 0.5, "estDroit": true}],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "P2", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "-", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "Z4", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "C2V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "C2R1", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "C2R2", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "C2J", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "C2B", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+	},
+	{
+		"id": 6,
+		"signal":
+		[
+			{"sens": "ho",
+				"s-1": "C2",
+				"s-1_sem_red": "0x25 0 3 00001000 00100000 00000000",
+				"s-2": "S4",
+				"s-2_sem_ora": "0x24 0 3 00000010 00000000 00000000",
+				"s-2_sem_gre": "",
+				"z-2": "Z6"
+			},
+			{"sens": "ah", "s-1": "C3", "s-2": "C6"},
+			{"sens": "ah", "s-1": "C5", "s-2": "C1"}
+			
+		],
+		"servo": [{"pin": "A2", "min": 1200,"id": "a1", "max": 1700, "speed": 2.0, "initPos": 0.5, "estDroit": true}],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "-", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "-", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "Z5", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "C3V", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "C3R1", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "C3R2", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "C3J", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "C3B", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+	},
+	{
+		"id": 7,
+		"signal":[],
+		"servo": [{"pin": "A2", "min": 1200,"id": "", "max": 1700, "speed": 2.0, "initPos": 0.5, "estDroit": true}],
+		"detecteur": 
+			[
+				{"pin": "A3", "id": "P1", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A4", "id": "-", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"},
+				{"pin": "A5", "id": "-", "status": 0, "intervalle": 100, "remanence": 1000, "level": "HIGH"}
+			],
+		"led": 
+			[
+				{"pin": "3", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "4", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "5", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "6", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "7", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "8", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "9", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A0", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900},
+				{"pin": "A1", "id": "", "max": 255, "brighteningTime": 250,"fadingTime": 250, "onTime": 200, "period": 900}
+			]
+	}
+]

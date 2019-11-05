@@ -1,0 +1,46 @@
+html {
+	margin: 20px;
+}
+table {
+	width: 600px;
+	margin-bottom: 10px;
+}
+td {
+	padding: 15px;
+}
+input[type="range"] {
+	position: relative;
+	margin-left: 1em;
+	cursor: pointer;
+}
+input[type="range"]:after, input[type="range"]:before {
+	position: absolute;
+	top: 1em;
+}
+input[type="range"]:before {
+	left: 0em;
+	content: attr(min);
+}
+input[type="range"]:after {
+	right: 0em;
+	content: attr(max);
+}
+#log {
+	text-align: center;
+	color: red;
+}
+.tr_01 {
+	border: 1px dotted #19888F;
+}
+.title_01 {
+	font-size: 18px;
+}
+#logo_locoduino {
+	margin-bottom: 30px;
+}
+.text_alignCenter {
+	text-align: center
+}
+.btn {
+	margin: 5px;
+}
