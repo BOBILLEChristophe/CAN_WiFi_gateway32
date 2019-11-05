@@ -22,7 +22,7 @@ et d’un module CAN SN65HVD230 (1,50€) : https://www.ebay.fr/itm/1pcs-SN65HVD
 
 Le logiciel est écrit en C/C++ au travers de l’IDE Arduino. Il comporte un fichier principal : CAN_WiFi_gateway32.ino et différents fichiers complémentaires auxquels il n’est pas nécessaire d’apporter de modifications à l’exclusion du fichier Config.h où seront renseignés vos paramètres spécifiques, l’identifiant du réseau wifi et le mot de passe :
 
-// WIFI
+
 	#define WIFI_SSID           "xxxxxxxxxx"
 	#define WIFI_PSW            "xxxxxxxxxx"
 	
