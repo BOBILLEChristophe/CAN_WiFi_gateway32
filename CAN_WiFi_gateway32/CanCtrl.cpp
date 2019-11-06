@@ -56,7 +56,7 @@ int GW_Can::msgRx() {
   if (xQueueReceive(CAN_cfg.rx_queue, &rx_frame, 3 * portTICK_PERIOD_MS) == pdTRUE) {
     switch (rx_frame.FIR.B.DLC) {
       case 0 :
-        sprintf(mInputMsg, "%x %d %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC);
+        sprintf(mInputMsg, "%x %d %d", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC);
         break;
       case 1 :
         sprintf(mInputMsg, "%x %d %d %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0]);
