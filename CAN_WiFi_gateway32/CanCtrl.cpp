@@ -39,7 +39,7 @@ void GW_Can::msgTx(const char* msg) {
 
 #ifdef DEBUG
   dbg_output.print("\nEnvoi d'un message sur le bus CAN\n");
-  dbg_output.printf("Id         : 0x%X\n", tx_frame.MsgID);
+  dbg_output.printf("Id         : 0x%02x\n", tx_frame.MsgID);
   dbg_output.printf("Type       : %d\n", tx_frame.FIR.B.FF);
   dbg_output.printf("Length     : %d\n", tx_frame.FIR.B.DLC);
   for (byte i = 0; i < tx_frame.FIR.B.DLC; i++)
@@ -56,41 +56,41 @@ int GW_Can::msgRx() {
   if (xQueueReceive(CAN_cfg.rx_queue, &rx_frame, 3 * portTICK_PERIOD_MS) == pdTRUE) {
     switch (rx_frame.FIR.B.DLC) {
       case 0 :
-        sprintf(mInputMsg, "%x %d %d", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC);
+        sprintf(mInputMsg, "%02x %d %d", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC);
         break;
       case 1 :
-        sprintf(mInputMsg, "%x %d %d %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0]);
+        sprintf(mInputMsg, "%02x %d %d %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0]);
         break;
       case 2 :
-        sprintf(mInputMsg, "%x %d %d %x %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1]);
+        sprintf(mInputMsg, "%02x %d %d %02x %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1]);
         break;
       case 3 :
-        sprintf(mInputMsg, "%x %d %d %x %x %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2]);
+        sprintf(mInputMsg, "%02x %d %d %02x %02x %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2]);
         break;
       case 4 :
-        sprintf(mInputMsg, "%x %d %d %x %x %x %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3]);
+        sprintf(mInputMsg, "%02x %d %d %02x %02x %02x %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3]);
         break;
       case 5 :
-        sprintf(mInputMsg, "%x %d %d %x %x %x %x %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4]);
+        sprintf(mInputMsg, "%02x %d %d %02x %02x %02x %02x %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4]);
         break;
       case 6 :
-        sprintf(mInputMsg, "%x %d %d %x %x %x %x %x %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4], rx_frame.data.u8[5]);
+        sprintf(mInputMsg, "%02x %d %d %02x %02x %02x %02x %02x %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4], rx_frame.data.u8[5]);
         break;
       case 7 :
-        sprintf(mInputMsg, "%x %d %d %x %x %x %x %x %x %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4], rx_frame.data.u8[5], rx_frame.data.u8[6]);
+        sprintf(mInputMsg, "%02x %d %d %02x %02x %02x %02x %02x %02x %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4], rx_frame.data.u8[5], rx_frame.data.u8[6]);
         break;
       case 8 :
-        sprintf(mInputMsg, "%x %d %d %x %x %x %x %x %x %x %x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4], rx_frame.data.u8[5], rx_frame.data.u8[6], rx_frame.data.u8[7]);
+        sprintf(mInputMsg, "%02x %d %d %02x %02x %02x %02x %02x %02x %02x %02x", rx_frame.MsgID, rx_frame.FIR.B.FF, rx_frame.FIR.B.DLC, rx_frame.data.u8[0], rx_frame.data.u8[1], rx_frame.data.u8[2], rx_frame.data.u8[3], rx_frame.data.u8[4], rx_frame.data.u8[5], rx_frame.data.u8[6], rx_frame.data.u8[7]);
         break;
     }
 
 #ifdef DEBUG
     dbg_output.print("\Reception d'un message sur le bus CAN\n");
-    dbg_output.printf("Id         : 0x%X\n", rx_frame.MsgID);
+    dbg_output.printf("Id         : 0x%02x\n", rx_frame.MsgID);
     dbg_output.printf("Type       : %d\n", rx_frame.FIR.B.FF);
     dbg_output.printf("Length     : %d\n", rx_frame.FIR.B.DLC);
     for (byte i = 0; i < rx_frame.FIR.B.DLC; i++)
-      dbg_output.printf("tx_frame[%d] : 0x%X\n", i, rx_frame.data.u8[i]);
+      dbg_output.printf("tx_frame[%d] : 0x%02x\n", i, rx_frame.data.u8[i]);
 #endif
     return 0;
   }
